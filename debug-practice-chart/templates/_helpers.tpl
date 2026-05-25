@@ -1,23 +1,40 @@
 {{/*
+Get namespace.create value with default
+*/}}
+{{- define "debug-practice-chart.namespace.create" -}}
+{{- if .Values.namespace }}
+{{- .Values.namespace.create | default true }}
+{{- else }}
+{{- false }}
+{{- end }}
+{{- end }}
+
+{{/*
+Get namespace.name value with default
+*/}}
+{{- define "debug-practice-chart.namespace.name" -}}
+{{- if .Values.namespace }}
+{{- .Values.namespace.name | default "" }}
+{{- else }}
+{{- "" }}
+{{- end }}
+{{- end }}
+
+{{/*
 Expand the name of the chart.
 */}}
 {{- define "debug-practice-chart.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name (include "debug-practice-chart.namespace.name" .) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
 {{- define "debug-practice-chart.fullname" -}}
-{{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if include "debug-practice-chart.namespace.name" . }}
+{{- (include "debug-practice-chart.namespace.name" .) | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
 {{- end }}
 {{- end }}
 
@@ -48,3 +65,13 @@ app.kubernetes.io/name: {{ include "debug-practice-chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+Define the namespace name
+*/}}
+{{- define "debug-practice-chart.namespace" -}}
+{{- if include "debug-practice-chart.namespace.create" . }}
+{{- include "debug-practice-chart.fullname" . }}
+{{- else }}
+{{- default "default" (include "debug-practice-chart.namespace.name" .) }}
+{{- end }}
+{{- end }}

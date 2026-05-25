@@ -12,11 +12,11 @@ image:
 
 resources:
   requests:
-    cpu: "5000m"
-    memory: "16Gi"
+    cpu: "2000m"
+    memory: "2Gi"
   limits:
-    cpu: "5000m"
-    memory: "16Gi"
+    cpu: "2000m"
+    memory: "2Gi"
 
 command:
   - "sh"
@@ -30,7 +30,6 @@ pod:
   nodeSelector: {}
   affinity: {}
 
-# Параметры для создания Pod Disruption Budget (опционально)
 pdb:
   create: false
   minAvailable: null
