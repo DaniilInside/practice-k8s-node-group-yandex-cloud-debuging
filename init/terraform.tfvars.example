@@ -1,0 +1,12 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and update with your values
+
+# Required: Yandex Cloud Folder ID
+folder_id = "your-folder-id-here"
+
+# Optional: Override default values
+cluster_name      = "my-mk8s-cluster"
+cluster_version   = "1.33"
+cluster_zone      = "ru-central1-a"
+node_instance_cores = 2
+node_instance_memory = 2

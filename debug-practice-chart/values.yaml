@@ -1,0 +1,38 @@
+deployment:
+  create: true
+  name: resource-hog
+  replicas: 1
+  labels: {}
+  annotations: {}
+
+image:
+  repository: busybox
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: "5000m"
+    memory: "16Gi"
+  limits:
+    cpu: "5000m"
+    memory: "16Gi"
+
+command:
+  - "sh"
+  - "-c"
+  - "sleep 10000"
+
+pod:
+  labels: {}
+  annotations: {}
+  tolerations: []
+  nodeSelector: {}
+  affinity: {}
+
+# Параметры для создания Pod Disruption Budget (опционально)
+pdb:
+  create: false
+  minAvailable: null
+  maxUnavailable: 1
+
