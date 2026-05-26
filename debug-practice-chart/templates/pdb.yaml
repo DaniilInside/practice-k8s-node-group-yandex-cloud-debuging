@@ -3,6 +3,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: {{ include "debug-practice-chart.fullname" . }}-pdb
+  namespace: {{ include "debug-practice-chart.namespace" . }}
   labels:
     {{- include "debug-practice-chart.labels" . | nindent 4 }}
 spec:

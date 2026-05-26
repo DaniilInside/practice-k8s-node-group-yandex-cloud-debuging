@@ -1,0 +1,45 @@
+deployment:
+  create: true
+  name: resource-hog
+  replicas: 3
+  labels: {}
+  annotations: {}
+  strategy: {}
+
+image:
+  repository: busybox
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: "200m"
+    memory: "20Mi"
+  limits:
+    cpu: "200m"
+    memory: "20Mi"
+
+command:
+  - "sh"
+  - "-c"
+  - "sleep 10000"
+
+pod:
+  labels:
+    app: high-availability
+  annotations: {}
+  tolerations: []
+  nodeSelector: {}
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app: high-availability
+          topologyKey: kubernetes.io/hostname
+
+pdb:
+  create: true
+  minAvailable: 3
+  maxUnavailable: 0
+

@@ -1,0 +1,38 @@
+deployment:
+  create: true
+  name: resource-hog
+  replicas: 1
+  labels: {}
+  annotations: {}
+  strategy: {}
+
+image:
+  repository: busybox
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: "2000m"
+    memory: "2Gi"
+  limits:
+    cpu: "2000m"
+    memory: "2Gi"
+
+command:
+  - "sh"
+  - "-c"
+  - "sleep 10000"
+
+pod:
+  labels: {}
+  annotations: {}
+  tolerations: []
+  nodeSelector: {}
+  affinity: {}
+
+pdb:
+  create: false
+  minAvailable: null
+  maxUnavailable: 1
+
