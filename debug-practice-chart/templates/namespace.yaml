@@ -1,0 +1,13 @@
+{{- if include "debug-practice-chart.namespace.create" . }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ include "debug-practice-chart.namespace" . }}
+  namespace: {{ include "debug-practice-chart.namespace" . }}
+  labels:
+    {{- include "debug-practice-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/component: namespace
+  annotations:
+    helm.sh/release-name: {{ .Release.Name }}
+    helm.sh/release-namespace: {{ .Release.Namespace }}
+{{- end }}
